@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Oportunidades Laborales - CENFOTEC</title>
+    <link rel="stylesheet" href="estilos-unificados.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+   <header>
+  <section class="logo">
+    <img src="imagenes/logo_principal.png" alt="logo">
+  </section>
+    <nav>
+    <ul>
+      <li><a href="inicio-admin.html">Inicio</a></li>
+      <li><a href="perfil-admin.html">Mi perfil</a></li>
+
+      <li>
+        <button type="button" class="mnu-btn">Egresados</button>
+        <ul>
+          <li><a href="gestion_egresados.html">Gestión de egresados</a></li>
+          <li><a href="carreras_admin.html">Gestión de carreras</a></li>
+          <li><a href="escuelas_admin.html">Gestión de escuelas</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button type="button" class="mnu-btn">Actividades y Comunidad</button>
+        <ul>
+          <li><a href="gestion_actividades_admin.html">Gestión de actividades</a></li>
+          <li><a href="gestion_comunidades_adim.html">Gestión de comunidades</a></li>
+          <li><a href="mentorias-lista.html">Gestión de mentorías</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button type="button" class="mnu-btn">Oportunidades</button>
+        <ul>
+          <li><a href="oportunidades-lista.html">Oportunidades laborales</a></li>
+          <li><a href="comunicados-lista.html">Comunicados</a></li>
+        </ul>
+      </li>
+
+      <li><a href="publica-admin.html">Página de Egresados</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+
+        <section>
+            <h1>Gestión de Oportunidades Laborales</h1>
+            <p>Administre las ofertas de empleo publicadas para los egresados.</p>
+            <br>
+            <a href="oportunidades-form.html" class="boton">+ Nueva oportunidad</a>
+        </section>
+
+        <section class="tarjeta">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Puesto</th>
+                        <th>Modalidad</th>
+                        <th>Ubicación</th>
+                        <th>Vencimiento</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TechSolutions CR</td>
+                        <td>Desarrollador Full Stack</td>
+                        <td>Remoto</td>
+                        <td>San José</td>
+                        <td>30/07/2026</td>
+                        <td><span class="activo">Activa</span></td>
+                        <td>
+                            <div class="acciones-tabla">
+                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
+                                <a href="oportunidades-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
+                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Banco Nacional</td>
+                        <td>Analista de Datos</td>
+                        <td>Presencial</td>
+                        <td>Heredia</td>
+                        <td>15/07/2026</td>
+                        <td><span class="activo">Activa</span></td>
+                        <td>
+                            <div class="acciones-tabla">
+                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
+                                <a href="oportunidades-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
+                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Intel Costa Rica</td>
+                        <td>Ingeniero de Software</td>
+                        <td>Híbrido</td>
+                        <td>Belén</td>
+                        <td>01/07/2026</td>
+                        <td><span class="inactivo">Cerrada</span></td>
+                        <td>
+                            <div class="acciones-tabla">
+                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
+                                <a href="oportunidades-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
+                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Universidad CENFOTEC · Programa de Egresados</p>
+        <p>Todos los derechos reservados</p>
+    </footer>
+
+    <script src="sitio.js"></script>
+</body>
+</html>

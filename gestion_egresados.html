@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos-unificados.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>Document</title>
+</head>
+<body class="pagina-egresados" data-modo="admin">
+      <header>
+  <section class="logo">
+    <img src="imagenes/logo_principal.png" alt="logo">
+  </section>
+    <nav>
+    <ul>
+      <li><a href="inicio-admin.html">Inicio</a></li>
+      <li><a href="perfil-admin.html">Mi perfil</a></li>
+
+      <li>
+        <button type="button" class="mnu-btn">Egresados</button>
+        <ul>
+          <li><a href="gestion_egresados.html">Gestión de egresados</a></li>
+          <li><a href="carreras_admin.html">Gestión de carreras</a></li>
+          <li><a href="escuelas_admin.html">Gestión de escuelas</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button type="button" class="mnu-btn">Actividades y Comunidad</button>
+        <ul>
+          <li><a href="gestion_actividades_admin.html">Gestión de actividades</a></li>
+          <li><a href="gestion_comunidades_adim.html">Gestión de comunidades</a></li>
+          <li><a href="mentorias-lista.html">Gestión de mentorías</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button type="button" class="mnu-btn">Oportunidades</button>
+        <ul>
+          <li><a href="oportunidades-lista.html">Oportunidades laborales</a></li>
+          <li><a href="comunicados-lista.html">Comunicados</a></li>
+        </ul>
+      </li>
+
+      <li><a href="publica-admin.html">Página de Egresados</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+        <div class="buscador">
+            <label for="buscar">Buscar:</label>
+            <input type="text" id="buscar" placeholder="Escribe un nombre...">
+            <button id="btnAgregar" class="btn-agregar">Agregar Egresado</button>
+        </div>
+        <form id="formEgresado" class="form-egresado" style="display: none;">
+            <h3>Nuevo Egresado</h3>
+            <input type="hidden" id="idEgresadoEditando" value="">
+
+            <div class="campo-egresado">
+                <input type="text" id="nombre" placeholder="Nombre completo">
+                <span class="error-campo" id="error-nombre"></span>
+            </div>
+
+            <div class="campo-egresado">
+                <input type="text" id="carrera" placeholder="Carrera">
+                <span class="error-campo" id="error-carrera"></span>
+            </div>
+
+            <div class="campo-egresado">
+                <input type="number" id="anio" placeholder="Año de graduación">
+                <span class="error-campo" id="error-anio"></span>
+            </div>
+
+            <div class="radio-group" role="radiogroup" aria-label="Estado">
+                <label><input type="radio" name="estado" value="Activo" checked> Activo</label>
+                <label><input type="radio" name="estado" value="Inactivo"> Inactivo</label>
+            </div>
+            <button type="submit" class="boton"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                <th>Foto</th>
+                <th>Nombre</th>
+                <th>Carrera</th>
+                <th>Año de graduación</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoTablaEgresados">
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button>«Anterior</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Siguiente »</button>
+        </div>
+    </main>
+    <footer>
+        <p>© 2026 Universidad CENFOTEC · Programa de Egresados</p>
+        <p>Todos los derechos reservados</p>
+    </footer>
+    <script src="datos.js"></script>
+    <script src="egresados.js"></script>
+    <script src="sitio.js"></script>
+</body>
+</html>

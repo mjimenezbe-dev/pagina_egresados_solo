@@ -1,0 +1,1149 @@
+:root {
+    --azul-cenfotec: #164a98;
+    --azul-claro: #006AEA;
+    --gris-fondo: #f4f6f9;
+    --gris-borde: #d8dee9;
+    --gris-texto: #4a5568;
+    --blanco: #ffffff;
+    --verde-exito: #2e7d32;
+    --rojo-alerta: #c62828;
+    --naranja-alerta: #f0ad4e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--gris-fondo);
+    color: var(--gris-texto);
+    line-height: 1.6;
+    text-align: justify;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+}
+
+.rol-badge {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.18);
+    color: var(--blanco);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-left: 12px;
+    letter-spacing: .3px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--gris-texto);
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.radio-group input[type="radio"] {
+    width: auto;
+    accent-color: var(--azul-cenfotec);
+    cursor: pointer;
+}
+
+header {
+    background-color: var(--azul-cenfotec);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo {
+    width: 180px;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav ul li {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+nav a,
+.mnu-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: none;
+    border: none;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover,
+.mnu-btn:hover {
+    background-color: var(--azul-claro);
+    color: #fff;
+}
+
+nav ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--azul-cenfotec);
+    min-width: 220px;
+    padding: 10px 0;
+    border-radius: 6px;
+    z-index: 1000;
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul li ul li {
+    display: block;
+    width: 100%;
+}
+
+nav ul li ul li a {
+    display: block;
+    padding: 10px 15px;
+}
+
+footer {
+    background-color: var(--azul-cenfotec);
+    color: var(--blanco);
+    text-align: center;
+    padding: 24px;
+    margin-top: 48px;
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    nav a {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 8px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    header {
+        flex-direction: row;
+        padding: 10px;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}
+
+@media (min-width: 1025px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    nav ul {
+        gap: 20px;
+    }
+}
+
+h1, h2, h3 {
+    color: var(--azul-cenfotec);
+    margin-bottom: 16px;
+}
+
+.tarjeta {
+    background-color: var(--blanco);
+    border: 1px solid var(--gris-borde);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.boton {
+    display: inline-block;
+    background-color: var(--azul-cenfotec);
+    color: var(--blanco);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.boton:hover {
+    background-color: var(--azul-claro);
+}
+
+.boton-secundario {
+    background-color: var(--gris-texto);
+}
+
+.boton-peligro {
+    background-color: var(--rojo-alerta);
+}
+
+.campo {
+    margin-bottom: 18px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--gris-texto);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: var(--azul-claro);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+th {
+    background-color: var(--azul-cenfotec);
+    color: var(--blanco);
+}
+
+tr:hover {
+    background-color: var(--gris-fondo);
+}
+
+.activo {
+    color: var(--verde-exito);
+    font-weight: bold;
+}
+
+.inactivo {
+    color: var(--rojo-alerta);
+    font-weight: bold;
+}
+
+.pendiente {
+    color: var(--naranja-alerta);
+    font-weight: bold;
+}
+
+.neutral {
+    color: var(--gris-texto);
+    font-weight: bold;
+}
+
+.view, .edit, .delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    background-color: var(--blanco);
+    cursor: pointer;
+    font-size: 15px;
+    margin: 0 3px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.view {
+    color: var(--azul-claro);
+}
+
+.edit {
+    color: var(--naranja-alerta);
+}
+
+.delete {
+    color: var(--rojo-alerta);
+}
+
+.view:hover {
+    background-color: var(--azul-claro);
+    color: var(--blanco);
+    border-color: var(--azul-claro);
+}
+
+.edit:hover {
+    background-color: var(--naranja-alerta);
+    color: var(--blanco);
+    border-color: var(--naranja-alerta);
+}
+
+.delete:hover {
+    background-color: var(--rojo-alerta);
+    color: var(--blanco);
+    border-color: var(--rojo-alerta);
+}
+
+.acciones-tabla {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.acciones-formulario {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.pagination {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--azul-cenfotec);
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.pagination button:hover {
+    background-color: var(--azul-claro);
+}
+
+.btn-agregar, .btn-filtrar {
+    background-color: var(--azul-cenfotec);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-agregar:hover, .btn-filtrar:hover {
+    background-color: var(--azul-claro);
+}
+
+.filtros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.filtros select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.filtros select:focus {
+    border-color: var(--azul-cenfotec);
+    outline: none;
+}
+
+.pagina-egresados table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.pagina-egresados th,
+.pagina-egresados td {
+    text-align: center;
+}
+
+.pagina-egresados thead {
+    background-color: var(--azul-cenfotec);
+    color: white;
+}
+
+.pagina-egresados tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.pagina-egresados tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.pagina-egresados td img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.pagina-egresados .buscador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.pagina-egresados .buscador input {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    transition: border-color 0.3s ease;
+}
+
+.pagina-egresados .buscador input:focus {
+    border-color: var(--azul-cenfotec);
+    outline: none;
+}
+
+.pagina-egresados .form-egresado {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pagina-egresados .form-egresado input,
+.pagina-egresados .form-egresado select {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.pagina-egresados .form-egresado .campo-egresado {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 1 200px;
+}
+
+.error-campo {
+    display: none;
+    color: var(--rojo-alerta);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.error-campo.visible {
+    display: block;
+}
+
+.pagina-egresados .form-egresado button {
+    background-color: var(--azul-cenfotec);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.pagina-egresados .form-egresado button:hover {
+    background-color: var(--azul-claro);
+}
+
+@media (max-width: 600px) {
+    .pagina-egresados table {
+        font-size: 12px;
+    }
+
+    .pagina-egresados th,
+    .pagina-egresados td {
+        padding: 6px;
+    }
+
+    .pagina-egresados .buscador {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .pagina-egresados .buscador input {
+        width: 100%;
+    }
+
+    .pagina-egresados .form-egresado {
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .pagina-egresados table {
+        font-size: 14px;
+    }
+
+    .pagina-egresados .buscador input {
+        width: 200px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .pagina-egresados table {
+        font-size: 16px;
+    }
+
+    .pagina-egresados .buscador input {
+        width: 250px;
+    }
+}
+
+.pagina-comunidad main h3 {
+    text-align: center;
+    color: var(--azul-claro);
+    font-size: 34px;
+    margin: 40px 0;
+}
+
+.pagina-comunidad .contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.pagina-comunidad .comunidad {
+    background: white;
+    border-radius: 15px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .12);
+    min-height: 330px;
+}
+
+.pagina-comunidad .circulo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 6px solid var(--azul-claro);
+    margin-bottom: 20px;
+    background: #f5f9ff;
+}
+
+.pagina-comunidad .comunidad h2 {
+    color: #2c3e50;
+    font-size: 23px;
+    margin: 10px 0 25px;
+}
+
+.pagina-comunidad .comunidad button {
+    background: var(--azul-cenfotec);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.pagina-comunidad .comunidad button:hover {
+    background: var(--azul-claro);
+}
+
+.pagina-comunidad .filtros {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    gap: 15px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .12);
+}
+
+.pagina-comunidad .filtros select {
+    padding: 12px 18px;
+    border: 2px solid var(--azul-claro);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    min-width: 180px;
+}
+
+.pagina-comunidad .filtros button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.pagina-comunidad .filtrar,
+.pagina-comunidad .agregar {
+    background: var(--azul-cenfotec);
+    color: white;
+}
+
+.pagina-comunidad .filtrar:hover,
+.pagina-comunidad .agregar:hover {
+    background: var(--azul-claro);
+}
+
+.pagina-comunidad .eliminar {
+    background: var(--rojo-alerta);
+    color: white;
+}
+
+.pagina-comunidad .eliminar:hover {
+    background: #a91f1f;
+}
+
+.pagina-inicio .contenedor {
+    width: 1200px;
+    max-width: 95%;
+    margin: 35px auto;
+    background: white;
+    border-radius: 25px;
+    padding: 60px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+    position: relative;
+    overflow: hidden;
+}
+
+.pagina-inicio .contenedor::after {
+    content: "";
+    position: absolute;
+    right: 60px;
+    top: 40px;
+    width: 430px;
+    height: 430px;
+    background-color: #007bff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.pagina-inicio .contenedor h1 {
+    font-size: 60px;
+    color: #072b66;
+    margin-bottom: 20px;
+    width: 45%;
+}
+
+.pagina-inicio .contenedor > p {
+    width: 42%;
+    color: #555;
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+.pagina-inicio .contenedor img {
+    position: absolute;
+    right: 100px;
+    top: 20px;
+    width: 400px;
+    z-index: 2;
+}
+
+.pagina-inicio button {
+    background: var(--azul-cenfotec);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.pagina-inicio button:hover {
+    background: var(--azul-claro);
+}
+
+.pagina-inicio .beneficios {
+    margin-top: 70px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    overflow: hidden;
+}
+
+.pagina-inicio .beneficios div {
+    padding: 35px 25px;
+    text-align: center;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.pagina-inicio .beneficios div:hover {
+    background: #f7faff;
+}
+
+.pagina-inicio .beneficios div:not(:last-child) {
+    border-right: 1px solid #ececec;
+}
+
+.pagina-inicio .beneficios i {
+    font-size: 45px;
+    color: #0069ee;
+    margin-bottom: 20px;
+}
+
+.pagina-inicio .beneficios h2 {
+    color: #0a2b67;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.pagina-inicio .beneficios p {
+    color: #666;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+.pagina-perfil main {
+    max-width: 1200px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 0 24px;
+}
+
+.pagina-perfil main > div {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pagina-perfil main .contenedor {
+    grid-column: 2 / 3;
+    text-align: center;
+}
+
+.pagina-perfil .perfil img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.pagina-perfil .informacion h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.pagina-perfil .informacion p {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.pagina-perfil .info,
+.pagina-perfil .trabajo,
+.pagina-perfil .laboral,
+.pagina-perfil .contacto,
+.pagina-perfil .actividades {
+    display: flex;
+    flex-direction: column;
+}
+
+.pagina-perfil .info h2,
+.pagina-perfil .trabajo h2,
+.pagina-perfil .contacto h2,
+.pagina-perfil .actividades h2,
+.pagina-perfil .laboral h2 {
+    font-size: 18px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.pagina-perfil .info p,
+.pagina-perfil .trabajo p,
+.pagina-perfil .contacto p,
+.pagina-perfil .actividades p,
+.pagina-perfil .laboral p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.pagina-perfil .contacto i {
+    color: #2c3e50;
+    margin-right: 8px;
+}
+
+.pagina-perfil .laboral {
+    grid-column: 1 / 2;
+    grid-row: 1;
+}
+
+.pagina-perfil .titulos-academicos {
+    grid-column: 1 / -1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pagina-perfil .titulos-academicos table {
+    width: 100%;
+}
+
+.pagina-perfil .titulos-academicos th,
+.pagina-perfil .titulos-academicos td {
+    text-align: center;
+}
+
+.pagina-egresado-detalle .perfil {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px auto;
+    width: 80%;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pagina-egresado-detalle .perfil img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.pagina-egresado-detalle .perfil h2 {
+    margin: 0;
+    color: var(--azul-cenfotec);
+}
+
+.pagina-egresado-detalle .perfil p {
+    margin: 4px 0 0;
+    color: #555;
+}
+
+.pagina-egresado-detalle main h3 {
+    text-align: center;
+    color: var(--azul-cenfotec);
+    margin-top: 10px;
+}
+
+.pagina-egresado-detalle table {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pagina-egresado-detalle thead {
+    background-color: var(--azul-cenfotec);
+    color: white;
+}
+
+.pagina-egresado-detalle th,
+.pagina-egresado-detalle td {
+    text-align: center;
+}
+
+.pagina-egresado-detalle tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.pagina-egresado-detalle tbody tr:hover {
+    background-color: #eef3ff;
+}
+
+@media (max-width: 600px) {
+    .pagina-egresado-detalle .perfil {
+        flex-direction: column;
+        width: 95%;
+        text-align: center;
+    }
+
+    .pagina-egresado-detalle table {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .pagina-egresado-detalle .filtros {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .pagina-egresado-detalle .filtros select {
+        width: 100%;
+    }
+
+    .pagina-egresado-detalle .pagination button {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .pagina-egresado-detalle .perfil {
+        flex-direction: row;
+        width: 90%;
+    }
+
+    .pagina-egresado-detalle table {
+        font-size: 14px;
+    }
+
+    .pagina-egresado-detalle .filtros select {
+        width: 200px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .pagina-egresado-detalle .perfil {
+        flex-direction: row;
+        width: 80%;
+    }
+
+    .pagina-egresado-detalle table {
+        font-size: 16px;
+    }
+
+    .pagina-egresado-detalle .filtros select {
+        width: 250px;
+    }
+}
+
+body.pagina-login {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.pagina-login main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 40px 0;
+}
+
+.pagina-login footer {
+    margin-top: auto;
+    width: 100%;
+}
+
+.pagina-login .login-container {
+    margin-top: 35px;
+    width: 900px;
+    max-width: 95%;
+    height: 500px;
+    background: white;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+}
+
+.pagina-login .login-content {
+    flex: 1.1;
+    padding: 45px 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pagina-login .encabezado h1 {
+    color: #072b66;
+    font-size: 2.1rem;
+    margin-bottom: 10px;
+}
+
+.pagina-login .encabezado p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.pagina-login .formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.mensaje-login {
+    display: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.mensaje-login.visible {
+    display: block;
+}
+
+.mensaje-login.exito {
+    background-color: #e3f6e5;
+    color: var(--verde-exito);
+    border: 1px solid #b6e3ba;
+}
+
+.mensaje-login.error {
+    background-color: #fdecea;
+    color: var(--rojo-alerta);
+    border: 1px solid #f5c2bd;
+}
+
+.pagina-login label {
+    color: #001f54;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.pagina-login input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 18px;
+    outline: none;
+    transition: .2s;
+}
+
+.pagina-login input::placeholder {
+    color: #b8b8b8;
+}
+
+.pagina-login input:focus {
+    border-color: #0168ee;
+}
+
+.pagina-login main button {
+    margin-top: 8px;
+    padding: 10px 20px;
+    background: var(--azul-cenfotec);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.pagina-login main button:hover {
+    background: var(--azul-claro);
+}
+
+.pagina-login .imagen-panel {
+    flex: .9;
+    background: #0168ee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagina-login .imagen-panel img {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+}
