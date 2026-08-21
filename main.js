@@ -1,16 +1,3 @@
-// ============================================================
-// main.js
-// Lógica del formulario de inicio de sesión.
-//
-// IMPORTANTE (léelo antes de usar esto en un sitio real):
-// Este login es solo una SIMULACIÓN para fines de práctica/demo.
-// Las contraseñas están escritas directamente en este archivo,
-// que cualquiera puede ver abriendo las herramientas de
-// desarrollador del navegador. Un login real necesita un
-// servidor (backend) que verifique las credenciales de forma
-// segura. Aquí lo hacemos así solo para poder mostrar el flujo
-// de "detectar rol -> mensaje de bienvenida -> redirigir".
-// ============================================================
 
 
 // ------------------------------------------------------------
