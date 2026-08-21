@@ -9,7 +9,6 @@
 </head>
 <body>
 
-    
     <header>
   <section class="logo">
     <img src="imagenes/logo_principal.png" alt="logo">
@@ -50,18 +49,60 @@
   </nav>
 </header>
 
-    
     <main>
 
-        <section>
-            <h1>Gestión de Comunicados</h1>
-            <p>Administre los comunicados institucionales dirigidos a los egresados.</p>
-            <br>
-           
-            <a href="comunicados-form.html" class="boton">+ Nuevo comunicado</a>
+        <section style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h1>Gestión de Comunicados</h1>
+                <p>Administre los comunicados institucionales dirigidos a los egresados.</p>
+            </div>
+            <!-- Cambiamos el enlace por un botón para abrir el formulario -->
+            <button type="button" id="btnAgregarComunicado" class="boton">+ Nuevo comunicado</button>
         </section>
 
-        
+        <!-- Formulario oculto para Crear/Editar Comunicados -->
+        <section id="contenedorFormularioComunicado" class="tarjeta" style="display: none; margin-bottom: 30px;">
+            <h3 id="tituloFormularioComunicado">Nuevo Comunicado</h3>
+            <form id="formComunicado">
+                <input type="hidden" id="idComunicadoEditando" value="">
+                
+                <div class="campo">
+                    <label for="tituloComunicado">Título del comunicado:</label>
+                    <input type="text" id="tituloComunicado" placeholder="Ej. Charla: Inteligencia Artificial en la industria" required>
+                </div>
+                
+                <div class="campo" style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label for="fechaComunicado">Fecha de publicación (DD/MM/AAAA):</label>
+                        <input type="text" id="fechaComunicado" placeholder="Ej. 15/06/2026" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="estadoComunicado">Estado:</label>
+                        <select id="estadoComunicado" required>
+                            <option value="Publicado">Publicado</option>
+                            <option value="Borrador">Borrador</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="dirigidoComunicado">Dirigido a:</label>
+                    <select id="dirigidoComunicado" required>
+                        <option value="">Seleccione el público meta...</option>
+                        <option value="Todos los egresados">Todos los egresados</option>
+                        <option value="Egresados de Bachillerato">Egresados de Bachillerato</option>
+                        <option value="Egresados de Licenciatura">Egresados de Licenciatura</option>
+                        <option value="Egresados de Maestría">Egresados de Maestría</option>
+                    </select>
+                </div>
+                
+                <div class="acciones-formulario">
+                    <button type="submit" class="boton">Guardar</button>
+                    <button type="button" id="btnCancelarComunicado" class="boton boton-secundario">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
         <section class="tarjeta">
             <table>
                 <thead>
@@ -73,59 +114,22 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-
-                    <tr>
-                        <td>Charla: Inteligencia Artificial en la industria</td>
-                        <td>15/06/2026</td>
-                        <td>Todos los egresados</td>
-                        <td><span class="activo">Publicado</span></td>
-                        <td>
-                            <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
-                                <a href="comunicados-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Nueva política de becas para maestrías</td>
-                        <td>10/06/2026</td>
-                        <td>Egresados de Bachillerato</td>
-                        <td><span class="activo">Publicado</span></td>
-                        <td>
-                            <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
-                                <a href="comunicados-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Feria de empleo tecnológico 2026</td>
-                        <td>05/06/2026</td>
-                        <td>Todos los egresados</td>
-                        <td><span class="pendiente">Borrador</span></td>
-                        <td>
-                            <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
-                                <a href="comunicados-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
+                <tbody id="cuerpoTablaComunicados">
+                    <!-- Las filas se generarán desde JavaScript -->
                 </tbody>
             </table>
         </section>
 
     </main>
 
-    <!-- PIE DE PÁGINA -->
     <footer>
         <p>© 2026 Universidad CENFOTEC · Programa de Egresados</p>
         <p>Todos los derechos reservados</p>
     </footer>
 
+    <!-- Scripts unificados -->
+    <script src="datos.js"></script>
     <script src="sitio.js"></script>
+    <script src="comunicados.js"></script>
 </body>
 </html>

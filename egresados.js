@@ -16,6 +16,10 @@
 
 const NOMBRE_COLECCION = "egresados";
 
+// Cuántas filas se muestran por página, y en qué página estamos parados.
+const FILAS_POR_PAGINA = 6;
+let paginaActual = 1;
+
 
 // ------------------------------------------------------------
 // 1. Averiguar en qué modo estamos (admin o user).
@@ -82,8 +86,9 @@ function renderizarTabla(listaEgresados) {
 
 
 // ------------------------------------------------------------
-// 4. Volver a leer los datos de Local Storage y redibujar la
-//    tabla, aplicando el texto de búsqueda si hay alguno escrito.
+// 4. Volver a leer los datos de Local Storage, aplicar el texto
+//    de búsqueda si hay alguno, recortar solo las 6 filas que le
+//    tocan a la página actual, y redibujar tabla + paginación.
 // ------------------------------------------------------------
 function actualizarVista() {
     const listaCompleta = obtenerColeccion(NOMBRE_COLECCION);
@@ -96,7 +101,86 @@ function actualizarVista() {
           })
         : listaCompleta;
 
-    renderizarTabla(listaFiltrada);
+    // Calculamos cuántas páginas de 6 filas se necesitan (mínimo 1,
+    // aunque la lista esté vacía, para no dividir entre cero).
+    const totalPaginas = Math.max(1, Math.ceil(listaFiltrada.length / FILAS_POR_PAGINA));
+
+    // Si por alguna razón quedamos "parados" en una página que ya no
+    // existe (por ejemplo, se eliminó el último egresado de la última
+    // página), retrocedemos automáticamente a la última página válida.
+    if (paginaActual > totalPaginas) {
+        paginaActual = totalPaginas;
+    }
+    if (paginaActual < 1) {
+        paginaActual = 1;
+    }
+
+    // Recortamos el arreglo para quedarnos solo con las filas de la
+    // página actual (por ejemplo, página 2 = filas de la 7 a la 12).
+    const indiceInicio = (paginaActual - 1) * FILAS_POR_PAGINA;
+    const indiceFin = indiceInicio + FILAS_POR_PAGINA;
+    const listaDeLaPagina = listaFiltrada.slice(indiceInicio, indiceFin);
+
+    renderizarTabla(listaDeLaPagina);
+    renderizarPaginacion(totalPaginas);
+}
+
+
+// ------------------------------------------------------------
+// 4.1 Construir y dibujar los botones de paginación: «Anterior,
+//     un botón por cada página que exista según la cantidad real
+//     de egresados (redondeando hacia arriba de 6 en 6), y
+//     "Siguiente »". Siempre se muestra, aunque sea una sola
+//     página, para que la persona vea cuántas hay en total.
+// ------------------------------------------------------------
+function renderizarPaginacion(totalPaginas) {
+    const contenedor = document.getElementById("paginacionEgresados");
+    if (!contenedor) {
+        return;
+    }
+
+    let botonesHTML = "";
+
+    // Botón "Anterior": deshabilitado si ya estamos en la página 1.
+    const anteriorDeshabilitado = paginaActual === 1 ? "disabled" : "";
+    botonesHTML += '<button type="button" data-pagina="anterior" ' + anteriorDeshabilitado + '>« Anterior</button>';
+
+    // Un botón por cada número de página (siempre al menos 1).
+    for (let numero = 1; numero <= totalPaginas; numero++) {
+        const claseActiva = numero === paginaActual ? "pagina-activa" : "";
+        botonesHTML += '<button type="button" class="' + claseActiva + '" data-pagina="' + numero + '">' + numero + '</button>';
+    }
+
+    // Botón "Siguiente": deshabilitado si ya estamos en la última página.
+    const siguienteDeshabilitado = paginaActual === totalPaginas ? "disabled" : "";
+    botonesHTML += '<button type="button" data-pagina="siguiente" ' + siguienteDeshabilitado + '>Siguiente »</button>';
+
+    contenedor.innerHTML = botonesHTML;
+}
+
+
+// ------------------------------------------------------------
+// 4.2 Se ejecuta al hacer clic en cualquier botón de paginación.
+//     Decide la nueva página según qué botón fue (número,
+//     anterior o siguiente) y vuelve a dibujar la vista.
+// ------------------------------------------------------------
+function manejarClicPaginacion(evento) {
+    const boton = evento.target.closest("button[data-pagina]");
+    if (!boton || boton.disabled) {
+        return;
+    }
+
+    const valor = boton.dataset.pagina;
+
+    if (valor === "anterior") {
+        paginaActual = paginaActual - 1;
+    } else if (valor === "siguiente") {
+        paginaActual = paginaActual + 1;
+    } else {
+        paginaActual = Number(valor);
+    }
+
+    actualizarVista();
 }
 
 
@@ -298,10 +382,20 @@ function iniciarModuloEgresados() {
     // La tabla se dibuja siempre, sin importar el rol.
     actualizarVista();
 
-    // La búsqueda funciona en ambos modos.
+    // La búsqueda funciona en ambos modos, y siempre vuelve a la página 1
+    // (si no, podrías quedar "parado" en una página que ya no tiene resultados).
     const campoBusqueda = document.getElementById("buscar");
     if (campoBusqueda) {
-        campoBusqueda.addEventListener("input", actualizarVista);
+        campoBusqueda.addEventListener("input", function () {
+            paginaActual = 1;
+            actualizarVista();
+        });
+    }
+
+    // La paginación también funciona en ambos modos (admin y user).
+    const contenedorPaginacion = document.getElementById("paginacionEgresados");
+    if (contenedorPaginacion) {
+        contenedorPaginacion.addEventListener("click", manejarClicPaginacion);
     }
 
     // Lo siguiente solo aplica si estamos en modo administrador.

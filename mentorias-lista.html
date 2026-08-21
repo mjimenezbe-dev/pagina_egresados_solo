@@ -11,7 +11,8 @@
 
  <header>
   <section class="logo">
-    <img src="imagenes/logo_principal.png" alt="logo">
+    <!-- Se agregó onerror para mostrar un logo por defecto si no encuentra la ruta local -->
+    <img src="imagenes/logo_principal.png" alt="logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x60?text=CENFOTEC+Logo';">
   </section>
     <nav>
     <ul>
@@ -78,9 +79,9 @@
                         <td><span class="activo">Activa</span></td>
                         <td>
                             <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
+                                <a href="#" class="view" onclick="alert('DATOS DE MENTORÍA\n\nMentor: Ana Jiménez\nÁrea: Desarrollo Web\nEspecialidades: JavaScript, React, Node.js\nAños de experiencia: 5\nInicio: 01/06/2026\nFin: 01/08/2026\nEstado: Activa\nObservaciones: Excelente disposición para ayudar a egresados junior.'); return false;"><i class="fa-solid fa-eye"></i></a>
                                 <a href="mentorias-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" class="delete" onclick="if(confirm('¿Está seguro que desea eliminar esta mentoría?')) { this.closest('tr').remove(); } return false;"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -92,9 +93,9 @@
                         <td><span class="pendiente">Pendiente</span></td>
                         <td>
                             <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
+                                <a href="#" class="view" onclick="alert('DATOS DE MENTORÍA\n\nMentor: Carlos Mora\nÁrea: Ciberseguridad\nEspecialidades: Ethical Hacking, Análisis de Vulnerabilidades\nAños de experiencia: 8\nInicio: 15/05/2026\nFin: 15/07/2026\nEstado: Pendiente\nObservaciones: El mentor está pendiente de confirmar los horarios disponibles.'); return false;"><i class="fa-solid fa-eye"></i></a>
                                 <a href="mentorias-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" class="delete" onclick="if(confirm('¿Está seguro que desea eliminar esta mentoría?')) { this.closest('tr').remove(); } return false;"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -106,9 +107,9 @@
                         <td><span class="neutral">Finalizada</span></td>
                         <td>
                             <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
+                                <a href="#" class="view" onclick="alert('DATOS DE MENTORÍA\n\nMentor: Laura Vega\nÁrea: Inteligencia Artificial\nEspecialidades: Machine Learning, Python, Redes Neuronales\nAños de experiencia: 4\nInicio: 10/03/2026\nFin: 10/05/2026\nEstado: Finalizada\nObservaciones: Proceso de mentoría concluido exitosamente con excelentes resultados.'); return false;"><i class="fa-solid fa-eye"></i></a>
                                 <a href="mentorias-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" class="delete" onclick="if(confirm('¿Está seguro que desea eliminar esta mentoría?')) { this.closest('tr').remove(); } return false;"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>

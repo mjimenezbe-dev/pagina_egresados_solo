@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actividades Admin</title>
+    <title>Gestión de Actividades - Admin</title>
     <link rel="stylesheet" href="estilos-unificados.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body data-modo="admin">
    <header>
         <section class="logo">
             <img src="imagenes/logo_principal.png" alt="logo">
@@ -50,92 +50,56 @@
     </header>
 
     <main>
-        <h3>Gestión de actividades</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Actividad</th>
-                    <th>Descripción</th>
-                    <th>Público</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Charla: IA en el Desarrollo de Software</td>
-                    <td>Uso de herramientas generativas en entornos de producción reales.</td>
-                    <td>Desarrolladores de Software</td>
-                    <td>
-          <div class="acciones-tabla">
-            <button class="view"><i class="fa-solid fa-eye"></i></button>
-                        <button class="edit"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </td>
-                </tr>
-                <tr>
-                    <td>Taller: Finanzas para Freelancers</td>
-                    <td>Estrategias de facturación, impuestos locales y gestión de cobros.</td>
-                    <td>General</td>
-                    <td>
-          <div class="acciones-tabla">
-            <button class="view"><i class="fa-solid fa-eye"></i></button>
-                        <button class="edit"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </td>
-                </tr>
-                <tr>
-                    <td>Networking: Egresados Cenfo 2026</td>
-                    <td>Encuentro presencial para conectar con reclutadores y colegas.</td>
-                    <td>General</td>
-                    <td>
-          <div class="acciones-tabla">
-            <button class="view"><i class="fa-solid fa-eye"></i></button>
-                        <button class="edit"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </td>
-                </tr>
-                <tr>
-                    <td>Torneo deportivo</td>
-                    <td>Actividades deportivas al aire libre</td>
-                    <td>General</td>
-                    <td>
-          <div class="acciones-tabla">
-            <button class="view"><i class="fa-solid fa-eye"></i></button>
-                        <button class="edit"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </td>
-                </tr>
-                <tr>
-                    <td>Voluntariado</td>
-                    <td>Voluntariado de siembra de árboles</td>
-                    <td>General</td>
-                    <td>
-          <div class="acciones-tabla">
-            <button class="view"><i class="fa-solid fa-eye"></i></button>
-                        <button class="edit"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </td>
-                </tr>
-                <tr>
-                    <td>Charla: Redes modernas</td>
-                    <td>Charla sobre las nuevas novedades en redes</td>
-                    <td>TI</td>
-                    <td>
-          <div class="acciones-tabla">
-            <button class="view"><i class="fa-solid fa-eye"></i></button>
-                        <button class="edit"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </td>
-                </tr>
+        <h1>Gestión de Actividades</h1>
 
-            </tbody>
-        </table>
+        <div style="margin-bottom: 20px;">
+            <button type="button" id="btnAgregarActividad" class="boton btn-agregar">Agregar Actividad</button>
+        </div>
+
+        <!-- Formulario encapsulado en una tarjeta (Oculto por defecto) -->
+        <section id="contenedorFormularioActividad" class="tarjeta" style="display: none;">
+            <h3 id="tituloFormularioActividad">Nueva Actividad</h3>
+            <form id="formActividad">
+                <input type="hidden" id="idActividadEditando" value="">
+                
+                <div class="campo">
+                    <label for="tituloActividad">Título de la Actividad:</label>
+                    <input type="text" id="tituloActividad" placeholder="Ej. Charla: IA en el Desarrollo" required>
+                </div>
+                
+                <div class="campo">
+                    <label for="descripcionActividad">Descripción:</label>
+                    <textarea id="descripcionActividad" placeholder="Breve descripción de la actividad..." required rows="3"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="publicoActividad">Público Dirigido:</label>
+                    <input type="text" id="publicoActividad" placeholder="Ej. General, TI, Desarrolladores" required>
+                </div>
+                
+                <div class="acciones-formulario">
+                    <button type="submit" class="boton">Guardar</button>
+                    <button type="button" id="btnCancelarActividad" class="boton boton-secundario">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Tabla dinámica -->
+        <section class="tarjeta">
+            <table id="tablaActividades">
+                <thead>
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Descripción</th>
+                        <th>Público</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTablaActividades">
+                    <!-- Las filas se inyectarán aquí desde actividades.js -->
+                </tbody>
+            </table>
+        </section>
     </main> 
 
     <footer>
@@ -143,6 +107,9 @@
         <p>Todos los derechos reservados</p>
     </footer>
 
+    <!-- Scripts en orden de dependencia -->
+    <script src="datos.js"></script>
     <script src="sitio.js"></script>
+    <script src="actividades.js"></script>
 </body>
 </html>

@@ -51,11 +51,66 @@
 
     <main>
 
-        <section>
-            <h1>Gestión de Oportunidades Laborales</h1>
-            <p>Administre las ofertas de empleo publicadas para los egresados.</p>
-            <br>
-            <a href="oportunidades-form.html" class="boton">+ Nueva oportunidad</a>
+        <section style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h1>Gestión de Oportunidades Laborales</h1>
+                <p>Administre las ofertas de empleo publicadas para los egresados.</p>
+            </div>
+            <!-- Cambiamos el <a> por un <button> para abrir el formulario aquí mismo -->
+            <button type="button" id="btnAgregarOportunidad" class="boton">+ Nueva oportunidad</button>
+        </section>
+
+        <!-- Formulario oculto para Crear/Editar -->
+        <section id="contenedorFormularioOportunidad" class="tarjeta" style="display: none; margin-bottom: 30px;">
+            <h3 id="tituloFormularioOportunidad">Nueva Oportunidad Laboral</h3>
+            <form id="formOportunidad">
+                <input type="hidden" id="idOportunidadEditando" value="">
+                
+                <div class="campo">
+                    <label for="empresaOportunidad">Empresa:</label>
+                    <input type="text" id="empresaOportunidad" placeholder="Ej. TechSolutions CR" required>
+                </div>
+                
+                <div class="campo">
+                    <label for="puestoOportunidad">Puesto:</label>
+                    <input type="text" id="puestoOportunidad" placeholder="Ej. Desarrollador Full Stack" required>
+                </div>
+
+                <div class="campo" style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label for="modalidadOportunidad">Modalidad:</label>
+                        <select id="modalidadOportunidad" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Remoto">Remoto</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Híbrido">Híbrido</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="estadoOportunidad">Estado:</label>
+                        <select id="estadoOportunidad" required>
+                            <option value="Activa">Activa</option>
+                            <option value="Cerrada">Cerrada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="campo" style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label for="ubicacionOportunidad">Ubicación:</label>
+                        <input type="text" id="ubicacionOportunidad" placeholder="Ej. San José" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="vencimientoOportunidad">Vencimiento (DD/MM/AAAA):</label>
+                        <input type="text" id="vencimientoOportunidad" placeholder="Ej. 30/07/2026" required>
+                    </div>
+                </div>
+                
+                <div class="acciones-formulario">
+                    <button type="submit" class="boton">Guardar</button>
+                    <button type="button" id="btnCancelarOportunidad" class="boton boton-secundario">Cancelar</button>
+                </div>
+            </form>
         </section>
 
         <section class="tarjeta">
@@ -71,52 +126,8 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>TechSolutions CR</td>
-                        <td>Desarrollador Full Stack</td>
-                        <td>Remoto</td>
-                        <td>San José</td>
-                        <td>30/07/2026</td>
-                        <td><span class="activo">Activa</span></td>
-                        <td>
-                            <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
-                                <a href="oportunidades-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Banco Nacional</td>
-                        <td>Analista de Datos</td>
-                        <td>Presencial</td>
-                        <td>Heredia</td>
-                        <td>15/07/2026</td>
-                        <td><span class="activo">Activa</span></td>
-                        <td>
-                            <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
-                                <a href="oportunidades-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Intel Costa Rica</td>
-                        <td>Ingeniero de Software</td>
-                        <td>Híbrido</td>
-                        <td>Belén</td>
-                        <td>01/07/2026</td>
-                        <td><span class="inactivo">Cerrada</span></td>
-                        <td>
-                            <div class="acciones-tabla">
-                                <a href="#" class="view"><i class="fa-solid fa-eye"></i></a>
-                                <a href="oportunidades-form.html" class="edit"><i class="fa-solid fa-pencil"></i></a>
-                                <a href="#" class="delete"><i class="fa-solid fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
+                <tbody id="cuerpoTablaOportunidades">
+                    <!-- Las filas se generarán desde JavaScript -->
                 </tbody>
             </table>
         </section>
@@ -128,6 +139,9 @@
         <p>Todos los derechos reservados</p>
     </footer>
 
+    <!-- Scripts unificados -->
+    <script src="datos.js"></script>
     <script src="sitio.js"></script>
+    <script src="oportunidades.js"></script>
 </body>
 </html>
