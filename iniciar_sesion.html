@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Iniciar Sesión - Universidad CENFOTEC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="estilos-unificados.css">
 </head>
 <body class="pagina-login">
     <header>
+      <div class="contenedor-header">
         <section class="logo">
-            <img src="imagenes/logo_principal.png" alt="logo">
+          <img src="imagenes/logo_principal.png" alt="logo">
         </section>
 
-    
+        <nav>
+          <ul>
+        
+          </ul>
         </nav>
+      </div>
     </header>
 
     <main>
@@ -24,26 +30,27 @@
                     <p>Inicia sesión para obtener los beneficios de egresado.</p>
                 </section>
 
-                <p id="mensajeLogin" class="mensaje-login"></p>
+                <p id="mensajeLogin" class="mensaje-login" style="display: none;"></p>
 
                 <form class="formulario" id="formularioLogin">
-                    <label for="usuario">Usuario</label>
-                    <input type="text" id="usuario" placeholder="admin o egresado" autocomplete="username">
+                    <label for="usuario">Usuario / Correo</label>
+                    <input type="text" id="usuario" placeholder="bienestar o egresado" autocomplete="username" required>
 
                     <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" placeholder="Tu contraseña" autocomplete="current-password">
+                    <input type="password" id="contrasena" placeholder="Tu contraseña" autocomplete="current-password" required>
 
                     <button type="submit">Iniciar sesión</button>
                 </form>
 
-                <p style="margin-top: 16px; font-size: 13px; color: #999;">
-                    Demo: usuario <strong>admin</strong> / contraseña <strong>admin123</strong>
-                    &nbsp;·&nbsp; usuario <strong>egresado</strong> / contraseña <strong>egresado123</strong>
+                <p class="demo-info">
+                    Demo: <strong>bienestar@cenfotec.ac.cr</strong> &nbsp;·&nbsp; 
+                    <strong>egresado@cenfotec.ac.cr</strong> <br>
+                    (Contraseña para todos: <strong>123456</strong>)
                 </p>
             </div>
 
             <div class="imagen-panel">
-                <img src="/imagenes/logoGrande.png" alt="Universidad CENFOTEC">
+                <img src="imagenes/logoGrande.png" alt="Universidad CENFOTEC">
             </div>
         </div>
     </main>
@@ -53,6 +60,8 @@
         <p>Todos los derechos reservados</p>
     </footer>
 
-    <script src="main.js"></script>
+    <script src="datos.js"></script>
+    <script src="sitio.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>

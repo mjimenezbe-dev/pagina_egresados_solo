@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos-unificados.css">
+    <title>Gestión de Egresados (Admin) - Universidad CENFOTEC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <title>Gestión de Egresados</title>
+    <link rel="stylesheet" href="estilos-unificados.css">
 </head>
 <body class="pagina-egresados" data-modo="admin">
+
     <header>
+      <div class="contenedor-header">
         <section class="logo">
-            <img src="imagenes/logo_principal.png" alt="logo">
+          <img src="imagenes/logo_principal.png" alt="logo">
         </section>
+
         <nav>
             <ul>
                 <li><a href="inicio-admin.html">Inicio</a></li>
@@ -21,7 +23,7 @@
                 <li>
                     <button type="button" class="mnu-btn">Egresados</button>
                     <ul>
-                        <li><a href="gestion_egresados.html">Gestión de egresados</a></li>
+                        <li><a href="gestion_egresados.html" class="active">Gestión de egresados</a></li>
                         <li><a href="carreras_admin.html">Gestión de carreras</a></li>
                         <li><a href="escuelas_admin.html">Gestión de escuelas</a></li>
                     </ul>
@@ -47,54 +49,55 @@
                 <li><a href="publica-admin.html">Página de Egresados</a></li>
             </ul>
         </nav>
+      </div>
     </header>
 
-    <main>
-        <div class="buscador">
-            <label for="buscar">Buscar:</label>
-            <input type="text" id="buscar" placeholder="Escribe un nombre...">
-            <button id="btnAgregar" class="btn-agregar">Agregar Egresado</button>
-            
-            <!-- Botón de Importar CSV adaptado a tus clases -->
-            <label for="inputCSV" class="btn-agregar" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-left: 10px;">
-                <i class="fa-solid fa-file-csv"></i> Importar CSV
-            </label>
-            <input type="file" id="inputCSV" accept=".csv" style="display: none;">
+    <main class="contenedor-principal">
+        <div class="encabezado-seccion">
+            <h2>Gestión de Egresados (Administración)</h2>
+            <div class="acciones-encabezado">
+                <button type="button" id="btnNuevoEgresado" class="btn-primario">
+                    <i class="fa-solid fa-plus"></i> Registrar Egresado
+                </button>
+                <label for="inputCSV" class="btn-secundario" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-file-csv"></i> Cargar CSV
+                </label>
+                <input type="file" id="inputCSV" accept=".csv" style="display: none;">
+            </div>
         </div>
 
-        <form id="formEgresado" class="form-egresado" style="display: none;">
-            <h3>Nuevo Egresado</h3>
-            <input type="hidden" id="idEgresadoEditando" value="">
-
-            <div class="campo-egresado">
-                <input type="text" id="nombre" placeholder="Nombre completo">
-                <span class="error-campo" id="error-nombre"></span>
+        <!-- Panel de Filtros -->
+        <div class="panel-filtros">
+            <div class="campo-filtro">
+                <label for="buscar">Buscar por nombre:</label>
+                <input type="text" id="buscar" placeholder="Escribe un nombre...">
             </div>
 
-            <div class="campo-egresado">
-                <input type="text" id="carrera" placeholder="Carrera">
-                <span class="error-campo" id="error-carrera"></span>
+            <div class="campo-filtro">
+                <label for="filtroCarrera">Carrera:</label>
+                <select id="filtroCarrera">
+                    <option value="">Todas las carreras</option>
+                </select>
             </div>
 
-            <div class="campo-egresado">
-                <input type="number" id="anio" placeholder="Año de graduación">
-                <span class="error-campo" id="error-anio"></span>
+            <div class="campo-filtro">
+                <label for="filtroEstado">Estado:</label>
+                <select id="filtroEstado">
+                    <option value="">Todos los estados</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
             </div>
+        </div>
 
-            <div class="radio-group" role="radiogroup" aria-label="Estado">
-                <label><input type="radio" name="estado" value="Activo" checked> Activo</label>
-                <label><input type="radio" name="estado" value="Inactivo"> Inactivo</label>
-            </div>
-            <button type="submit" class="boton"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-        </form>
-
+        <!-- Tabla Admin (6 Columnas) -->
         <table>
             <thead>
                 <tr>
                     <th>Foto</th>
                     <th>Nombre</th>
                     <th>Carrera</th>
-                    <th>Año de graduación</th>
+                    <th>Año Graduación</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -102,16 +105,57 @@
             <tbody id="cuerpoTablaEgresados">
             </tbody>
         </table>
+        
         <div class="pagination" id="paginacionEgresados"></div>
     </main>
+
+    <!-- Modal Formulario para Registrar / Editar -->
+    <div id="modalEgresado" class="modal-contenedor" style="display: none;">
+        <form id="formEgresado" class="modal-contenido">
+            <h3>Nuevo Egresado</h3>
+            <input type="hidden" id="idEgresadoEditando">
+
+            <div class="campo-form">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" placeholder="Ej: Mateo Rodríguez">
+                <span id="error-nombre" class="error-texto"></span>
+            </div>
+
+            <div class="campo-form">
+                <label for="carrera">Carrera:</label>
+                <input type="text" id="carrera" placeholder="Ej: Ingeniería de Software">
+                <span id="error-carrera" class="error-texto"></span>
+            </div>
+
+            <div class="campo-form">
+                <label for="anio">Año de graduación:</label>
+                <input type="number" id="anio" placeholder="Ej: 2023">
+                <span id="error-anio" class="error-texto"></span>
+            </div>
+
+            <div class="campo-form">
+                <label>Estado:</label>
+                <div class="opciones-radio">
+                    <label><input type="radio" name="estado" value="Activo" checked> Activo</label>
+                    <label><input type="radio" name="estado" value="Inactivo"> Inactivo</label>
+                </div>
+            </div>
+
+            <div class="acciones-modal">
+                <button type="submit" class="btn-primario">Guardar</button>
+                <button type="button" id="btnCerrarModal" class="btn-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
 
     <footer>
         <p>© 2026 Universidad CENFOTEC · Programa de Egresados</p>
         <p>Todos los derechos reservados</p>
     </footer>
 
+    <!-- Scripts del Sistema -->
     <script src="datos.js"></script>
-    <script src="egresados.js"></script>
     <script src="sitio.js"></script>
+    <script src="egresados.js"></script>
 </body>
 </html>

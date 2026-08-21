@@ -22,6 +22,7 @@
 // ------------------------------------------------------------
 const CLAVES_STORAGE = {
     egresados: "cenfotec_egresados",
+    titulos: "cenfotec_titulos",
     carreras: "cenfotec_carreras",
     escuelas: "cenfotec_escuelas",
     actividades: "cenfotec_actividades",
@@ -29,6 +30,8 @@ const CLAVES_STORAGE = {
     mentorias: "cenfotec_mentorias",
     oportunidades: "cenfotec_oportunidades",
     comunicados: "cenfotec_comunicados",
+    usuarios: "cenfotec_usuarios",
+    sesion: "cenfotec_sesion_activa",
     inicializado: "cenfotec_inicializado"
 };
 
@@ -39,12 +42,24 @@ const CLAVES_STORAGE = {
 //    sitio en un navegador; después, todo se lee de Local Storage.
 // ------------------------------------------------------------
 const DATOS_SEMILLA = {
+    usuarios: [
+        { id: 1, email: "registro@cenfotec.ac.cr", clave: "123456", rol: "registro", nombre: "Personal de Registro" },
+        { id: 2, email: "bienestar@cenfotec.ac.cr", clave: "123456", rol: "bienestar", nombre: "Personal Bienestar Estudiantil" },
+        { id: 3, email: "egresado@cenfotec.ac.cr", clave: "123456", rol: "egresado", nombre: "Mateo (Egresado)" }
+    ],
     egresados: [
-        { id: 1, nombre: "Mateo", carrera: "Ingeniería de software", anioGraduacion: 2002, estado: "Activo", foto: "foto_perfil/images.jpg" },
-        { id: 2, nombre: "Martin", carrera: "Técnico en ciberseguridad", anioGraduacion: 2025, estado: "Inactivo", foto: "foto_perfil/images (1).jpg" },
-        { id: 3, nombre: "Camila", carrera: "Maestría en IA", anioGraduacion: 2000, estado: "Activo", foto: "foto_perfil/images (3).jpg" },
-        { id: 4, nombre: "Sebastian", carrera: "Bachillerato en ciberseguridad", anioGraduacion: 2015, estado: "Inactivo", foto: "foto_perfil/images (2).jpg" },
-        { id: 5, nombre: "Maria", carrera: "Técnico en bases de datos", anioGraduacion: 2025, estado: "Inactivo", foto: "foto_perfil/images (4).jpg" }
+        { id: 1, nombre: "Mateo", carrera: "Ingeniería de software", anioGraduacion: 2002, estado: "Activo", foto: "foto_perfil/images.jpg", correoPersonal: "mateo@gmail.com", telefono: "8888-1111", empresaActual: "Tech CR", puestoActual: "Desarrollador Lead", areaProfesional: "Ingeniería del Software", linkedIn: "https://linkedin.com", portafolio: "https://github.com" },
+        { id: 2, nombre: "Martin", carrera: "Técnico en ciberseguridad", anioGraduacion: 2025, estado: "Inactivo", foto: "foto_perfil/images (1).jpg", correoPersonal: "martin@gmail.com", telefono: "8888-2222", empresaActual: "SecOps", puestoActual: "Analista SOC", areaProfesional: "Ciberseguridad", linkedIn: "", portafolio: "" },
+        { id: 3, nombre: "Camila", carrera: "Maestría en IA", anioGraduacion: 2000, estado: "Activo", foto: "foto_perfil/images (3).jpg", correoPersonal: "camila@gmail.com", telefono: "8888-3333", empresaActual: "AI Labs", puestoActual: "Investigadora AI", areaProfesional: "Sistemas Inteligentes", linkedIn: "", portafolio: "" },
+        { id: 4, nombre: "Sebastian", carrera: "Bachillerato en ciberseguridad", anioGraduacion: 2015, estado: "Inactivo", foto: "foto_perfil/images (2).jpg", correoPersonal: "sebastian@gmail.com", telefono: "8888-4444", empresaActual: "CyberNet", puestoActual: "Auditor TI", areaProfesional: "Ciberseguridad", linkedIn: "", portafolio: "" },
+        { id: 5, nombre: "Maria", carrera: "Técnico en bases de datos", anioGraduacion: 2025, estado: "Inactivo", foto: "foto_perfil/images (4).jpg", correoPersonal: "maria@gmail.com", telefono: "8888-5555", empresaActual: "DataCorp", puestoActual: "DBA Junior", areaProfesional: "Sistemas de Información", linkedIn: "", portafolio: "" }
+    ],
+    titulos: [
+        { id: 1, egresadoId: 1, tipoPrograma: "Bachillerato", carrera: "Ingeniería de software", escuela: "Ingeniería del Software", anioGraduacion: 2002, estado: "Emitido" },
+        { id: 2, egresadoId: 2, tipoPrograma: "Técnico", carrera: "Técnico en Ciberseguridad", escuela: "Ciberseguridad", anioGraduacion: 2025, estado: "Emitido" },
+        { id: 3, egresadoId: 3, tipoPrograma: "Maestría", carrera: "Maestría en IA", escuela: "Sistemas Inteligentes", anioGraduacion: 2000, estado: "Emitido" },
+        { id: 4, egresadoId: 4, tipoPrograma: "Bachillerato", carrera: "Bachillerato en ciberseguridad", escuela: "Ciberseguridad", anioGraduacion: 2015, estado: "Emitido" },
+        { id: 5, egresadoId: 5, tipoPrograma: "Técnico", carrera: "Técnico en bases de datos", escuela: "Sistemas de Información", anioGraduacion: 2025, estado: "Emitido" }
     ],
     carreras: [
         { id: 1, nombre: "Técnico en Desarrollo de Software", escuela: "Ingeniería del Software", egresados: 320, estado: "Activo" },
@@ -122,7 +137,9 @@ function inicializarDatos() {
     // Recorremos cada colección semilla y la guardamos en Local Storage.
     for (const nombreColeccion in DATOS_SEMILLA) {
         const clave = CLAVES_STORAGE[nombreColeccion];
-        localStorage.setItem(clave, JSON.stringify(DATOS_SEMILLA[nombreColeccion]));
+        if (clave) {
+            localStorage.setItem(clave, JSON.stringify(DATOS_SEMILLA[nombreColeccion]));
+        }
     }
 
     // Marcamos que ya se inicializó, para no repetir este proceso.
@@ -153,7 +170,9 @@ function obtenerColeccion(nombreColeccion) {
 // que hubiera antes.
 function guardarColeccion(nombreColeccion, arreglo) {
     const clave = CLAVES_STORAGE[nombreColeccion];
-    localStorage.setItem(clave, JSON.stringify(arreglo));
+    if (clave) {
+        localStorage.setItem(clave, JSON.stringify(arreglo));
+    }
 }
 
 // Genera un id nuevo para un elemento: toma el id más alto que
@@ -208,7 +227,29 @@ function eliminarElemento(nombreColeccion, id) {
 
 
 // ------------------------------------------------------------
-// 5. Ejecutamos la inicialización apenas se carga este archivo,
+// 5. Funciones auxiliares para el Manejo de Sesión y Roles (RF-01)
+// ------------------------------------------------------------
+function obtenerSesionActiva() {
+    try {
+        const sesion = localStorage.getItem(CLAVES_STORAGE.sesion);
+        return sesion ? JSON.parse(sesion) : null;
+    } catch (error) {
+        return null;
+    }
+}
+
+function guardarSesionActiva(usuario) {
+    localStorage.setItem(CLAVES_STORAGE.sesion, JSON.stringify(usuario));
+}
+
+function cerrarSesion() {
+    localStorage.removeItem(CLAVES_STORAGE.sesion);
+    window.location.href = "iniciar_sesion.html";
+}
+
+
+// ------------------------------------------------------------
+// 6. Ejecutamos la inicialización apenas se carga este archivo,
 //    para que los datos existan ANTES de que cualquier otra
 //    página intente leerlos.
 // ------------------------------------------------------------
