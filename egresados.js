@@ -3,7 +3,7 @@
 // Lógica del módulo "Gestión de Egresados".
 // Se usa en DOS páginas distintas:
 //   - gestion_egresados.html          (administrador: puede
-//     agregar, editar y eliminar)
+//     agregar, editar, eliminar e importar CSV)
 //   - gestion_egresadors_usuario.html (usuario: solo puede ver
 //     la lista, sin botones de acción)
 //
@@ -78,8 +78,7 @@ function renderizarTabla(listaEgresados) {
         return;
     }
 
-    // Construimos el HTML de todas las filas y lo insertamos de una vez
-    // (más eficiente que insertar fila por fila).
+    // Construimos el HTML de todas las filas y lo insertamos de una vez.
     const filasHTML = listaEgresados.map(crearFilaHTML).join("");
     cuerpoTabla.innerHTML = filasHTML;
 }
@@ -101,13 +100,8 @@ function actualizarVista() {
           })
         : listaCompleta;
 
-    // Calculamos cuántas páginas de 6 filas se necesitan (mínimo 1,
-    // aunque la lista esté vacía, para no dividir entre cero).
     const totalPaginas = Math.max(1, Math.ceil(listaFiltrada.length / FILAS_POR_PAGINA));
 
-    // Si por alguna razón quedamos "parados" en una página que ya no
-    // existe (por ejemplo, se eliminó el último egresado de la última
-    // página), retrocedemos automáticamente a la última página válida.
     if (paginaActual > totalPaginas) {
         paginaActual = totalPaginas;
     }
@@ -115,8 +109,6 @@ function actualizarVista() {
         paginaActual = 1;
     }
 
-    // Recortamos el arreglo para quedarnos solo con las filas de la
-    // página actual (por ejemplo, página 2 = filas de la 7 a la 12).
     const indiceInicio = (paginaActual - 1) * FILAS_POR_PAGINA;
     const indiceFin = indiceInicio + FILAS_POR_PAGINA;
     const listaDeLaPagina = listaFiltrada.slice(indiceInicio, indiceFin);
@@ -127,11 +119,7 @@ function actualizarVista() {
 
 
 // ------------------------------------------------------------
-// 4.1 Construir y dibujar los botones de paginación: «Anterior,
-//     un botón por cada página que exista según la cantidad real
-//     de egresados (redondeando hacia arriba de 6 en 6), y
-//     "Siguiente »". Siempre se muestra, aunque sea una sola
-//     página, para que la persona vea cuántas hay en total.
+// 4.1 Construir y dibujar los botones de paginación.
 // ------------------------------------------------------------
 function renderizarPaginacion(totalPaginas) {
     const contenedor = document.getElementById("paginacionEgresados");
@@ -141,17 +129,14 @@ function renderizarPaginacion(totalPaginas) {
 
     let botonesHTML = "";
 
-    // Botón "Anterior": deshabilitado si ya estamos en la página 1.
     const anteriorDeshabilitado = paginaActual === 1 ? "disabled" : "";
     botonesHTML += '<button type="button" data-pagina="anterior" ' + anteriorDeshabilitado + '>« Anterior</button>';
 
-    // Un botón por cada número de página (siempre al menos 1).
     for (let numero = 1; numero <= totalPaginas; numero++) {
         const claseActiva = numero === paginaActual ? "pagina-activa" : "";
         botonesHTML += '<button type="button" class="' + claseActiva + '" data-pagina="' + numero + '">' + numero + '</button>';
     }
 
-    // Botón "Siguiente": deshabilitado si ya estamos en la última página.
     const siguienteDeshabilitado = paginaActual === totalPaginas ? "disabled" : "";
     botonesHTML += '<button type="button" data-pagina="siguiente" ' + siguienteDeshabilitado + '>Siguiente »</button>';
 
@@ -161,8 +146,6 @@ function renderizarPaginacion(totalPaginas) {
 
 // ------------------------------------------------------------
 // 4.2 Se ejecuta al hacer clic en cualquier botón de paginación.
-//     Decide la nueva página según qué botón fue (número,
-//     anterior o siguiente) y vuelve a dibujar la vista.
 // ------------------------------------------------------------
 function manejarClicPaginacion(evento) {
     const boton = evento.target.closest("button[data-pagina]");
@@ -186,13 +169,11 @@ function manejarClicPaginacion(evento) {
 
 // ============================================================
 // A partir de aquí, funciones que SOLO se usan en modo admin
-// (validar formulario, agregar, editar, eliminar).
+// (validar formulario, agregar, editar, eliminar e importar CSV).
 // ============================================================
 
 // ------------------------------------------------------------
 // 5. Validar los datos del formulario antes de guardarlos.
-//    Devuelve un objeto con "valido" (true/false) y un objeto
-//    "errores" con el mensaje de cada campo que falló.
 // ------------------------------------------------------------
 function validarDatosEgresado(datos) {
     const errores = {};
@@ -221,8 +202,7 @@ function validarDatosEgresado(datos) {
 
 
 // ------------------------------------------------------------
-// 6. Mostrar los mensajes de error debajo de cada campo, y
-//    limpiar los mensajes de los campos que sí son válidos.
+// 6. Mostrar los mensajes de error debajo de cada campo.
 // ------------------------------------------------------------
 function mostrarErroresEgresado(errores) {
     const campos = ["nombre", "carrera", "anio"];
@@ -244,10 +224,7 @@ function mostrarErroresEgresado(errores) {
 
 
 // ------------------------------------------------------------
-// 7. Poner el formulario en "modo edición": lo llena con los
-//    datos del egresado seleccionado y guarda su id en un campo
-//    oculto, para saber que al guardar debemos ACTUALIZAR y no
-//    crear un egresado nuevo.
+// 7. Poner el formulario en "modo edición".
 // ------------------------------------------------------------
 function cargarEgresadoEnFormulario(id) {
     const egresado = buscarPorId(NOMBRE_COLECCION, id);
@@ -271,8 +248,7 @@ function cargarEgresadoEnFormulario(id) {
 
 
 // ------------------------------------------------------------
-// 8. Vaciar el formulario y devolverlo a su estado de "Nuevo
-//    Egresado" (sin ningún id de edición pendiente).
+// 8. Vaciar el formulario y devolverlo a "Nuevo Egresado".
 // ------------------------------------------------------------
 function limpiarFormularioEgresado() {
     document.getElementById("formEgresado").reset();
@@ -283,9 +259,7 @@ function limpiarFormularioEgresado() {
 
 
 // ------------------------------------------------------------
-// 9. Se ejecuta al enviar el formulario: valida los datos y,
-//    según haya o no un id de edición, actualiza o crea un
-//    egresado nuevo.
+// 9. Se ejecuta al enviar el formulario (Crear / Actualizar).
 // ------------------------------------------------------------
 function manejarEnvioFormularioEgresado(evento) {
     evento.preventDefault();
@@ -301,20 +275,15 @@ function manejarEnvioFormularioEgresado(evento) {
     mostrarErroresEgresado(resultado.errores);
 
     if (!resultado.valido) {
-        return; // No seguimos: hay campos inválidos.
+        return;
     }
 
-    // Convertimos el año a número antes de guardarlo.
     datos.anioGraduacion = Number(datos.anioGraduacion);
-
     const idEnEdicion = document.getElementById("idEgresadoEditando").value;
 
     if (idEnEdicion) {
-        // Ya existe un egresado con ese id: lo actualizamos.
         actualizarElemento(NOMBRE_COLECCION, idEnEdicion, datos);
     } else {
-        // No hay id: es un egresado nuevo. Le damos una foto por
-        // defecto, ya que el formulario no pide subir una imagen.
         datos.foto = "foto_perfil/default.jpg";
         agregarElemento(NOMBRE_COLECCION, datos);
     }
@@ -326,8 +295,7 @@ function manejarEnvioFormularioEgresado(evento) {
 
 
 // ------------------------------------------------------------
-// 10. Eliminar un egresado, pidiendo confirmación antes (para
-//     evitar borrados accidentales).
+// 10. Eliminar un egresado.
 // ------------------------------------------------------------
 function manejarEliminarEgresado(id) {
     const egresado = buscarPorId(NOMBRE_COLECCION, id);
@@ -343,14 +311,93 @@ function manejarEliminarEgresado(id) {
 
 
 // ------------------------------------------------------------
-// 11. Un solo "escuchador" de clics para toda la tabla (en vez
-//     de uno por cada botón). Revisa qué botón se presionó según
-//     su atributo data-accion.
+// 11. Cargar y procesar archivo CSV.
+// ------------------------------------------------------------
+function manejarCargaCSV(evento) {
+    const archivo = evento.target.files[0];
+    if (!archivo) {
+        return;
+    }
+
+    const lector = new FileReader();
+    lector.onload = function (e) {
+        const contenido = e.target.result;
+        procesarYGuardarCSV(contenido);
+        evento.target.value = ""; // Limpia el input para permitir volver a cargar el mismo archivo
+    };
+    lector.readAsText(archivo);
+}
+
+function procesarYGuardarCSV(contenidoTexto) {
+    const filas = contenidoTexto.split(/\r?\n/).filter(function (fila) {
+        return fila.trim() !== "";
+    });
+
+    if (filas.length < 2) {
+        window.alert("El archivo CSV está vacío o no contiene datos válidos.");
+        return;
+    }
+
+    // Extraer encabezados en minúsculas para compararlos fácilmente
+    const encabezados = filas[0].split(",").map(function (h) {
+        return h.trim().toLowerCase().replace(/^"|"$/g, '');
+    });
+
+    let contadorImportados = 0;
+
+    for (let i = 1; i < filas.length; i++) {
+        const valores = filas[i].split(",").map(function (v) {
+            return v.trim().replace(/^"|"$/g, '');
+        });
+
+        if (valores.length < 2) continue;
+
+        const nuevoEgresado = {
+            foto: "foto_perfil/default.jpg",
+            nombre: "",
+            carrera: "",
+            anioGraduacion: new Date().getFullYear(),
+            estado: "Activo"
+        };
+
+        // Asignar campos mapeando según el nombre de la columna en el CSV
+        encabezados.forEach(function (columna, indice) {
+            const valor = valores[indice] || "";
+            if (columna.includes("nombre")) {
+                nuevoEgresado.nombre = valor;
+            } else if (columna.includes("carrera")) {
+                nuevoEgresado.carrera = valor;
+            } else if (columna.includes("año") || columna.includes("anio") || columna.includes("graduacion")) {
+                nuevoEgresado.anioGraduacion = Number(valor) || new Date().getFullYear();
+            } else if (columna.includes("estado")) {
+                nuevoEgresado.estado = valor.toLowerCase() === "inactivo" ? "Inactivo" : "Activo";
+            }
+        });
+
+        // Guardar únicamente si posee un nombre válido
+        if (nuevoEgresado.nombre.trim().length >= 2) {
+            agregarElemento(NOMBRE_COLECCION, nuevoEgresado);
+            contadorImportados++;
+        }
+    }
+
+    if (contadorImportados > 0) {
+        paginaActual = 1; // Volver a la primera página para mostrar los nuevos registros
+        actualizarVista();
+        window.alert("Se importaron " + contadorImportados + " egresados exitosamente.");
+    } else {
+        window.alert("No se pudo importar ningún egresado. Revisa las columnas del archivo CSV.");
+    }
+}
+
+
+// ------------------------------------------------------------
+// 12. Escuchador de clics para acciones dentro de la tabla.
 // ------------------------------------------------------------
 function manejarClicEnTabla(evento) {
     const boton = evento.target.closest("button[data-accion]");
     if (!boton) {
-        return; // El clic no fue sobre un botón de acción.
+        return;
     }
 
     const id = boton.dataset.id;
@@ -375,15 +422,11 @@ function manejarClicEnTabla(evento) {
 
 
 // ============================================================
-// 12. Arranque del módulo: conecta los eventos según el modo
-//     (admin o user) y dibuja la tabla por primera vez.
+// 13. Arranque del módulo: conecta los eventos según el modo.
 // ============================================================
 function iniciarModuloEgresados() {
-    // La tabla se dibuja siempre, sin importar el rol.
     actualizarVista();
 
-    // La búsqueda funciona en ambos modos, y siempre vuelve a la página 1
-    // (si no, podrías quedar "parado" en una página que ya no tiene resultados).
     const campoBusqueda = document.getElementById("buscar");
     if (campoBusqueda) {
         campoBusqueda.addEventListener("input", function () {
@@ -392,13 +435,11 @@ function iniciarModuloEgresados() {
         });
     }
 
-    // La paginación también funciona en ambos modos (admin y user).
     const contenedorPaginacion = document.getElementById("paginacionEgresados");
     if (contenedorPaginacion) {
         contenedorPaginacion.addEventListener("click", manejarClicPaginacion);
     }
 
-    // Lo siguiente solo aplica si estamos en modo administrador.
     if (!esModoAdministrador()) {
         return;
     }
@@ -406,6 +447,7 @@ function iniciarModuloEgresados() {
     const botonAgregar = document.getElementById("btnAgregar");
     const formulario = document.getElementById("formEgresado");
     const tabla = document.querySelector("table");
+    const inputCSV = document.getElementById("inputCSV");
 
     if (botonAgregar && formulario) {
         botonAgregar.addEventListener("click", function () {
@@ -425,6 +467,10 @@ function iniciarModuloEgresados() {
 
     if (tabla) {
         tabla.addEventListener("click", manejarClicEnTabla);
+    }
+
+    if (inputCSV) {
+        inputCSV.addEventListener("change", manejarCargaCSV);
     }
 }
 
